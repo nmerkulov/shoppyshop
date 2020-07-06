@@ -36,11 +36,5 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
 
-    - name: notify channel
-#      TODO: uncomment after secrets are added to repo settings
-#      env:
-#        BOT_ID: ${{ secrets.TG_BOT_ID }}
-#        CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-      run: bash .github/scripts/notify_tg.sh
 
 
