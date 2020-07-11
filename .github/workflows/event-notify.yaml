@@ -14,16 +14,23 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
 
-# TODO: checkout only to access bash script, need to improve this
+# we have to checkout to access a private action
     - uses: actions/checkout@v2
-    - name: notify channel
+    - uses: ./.github/actions/notify_tg
+      with:
+        message: |
+          *event*: ${{ github.event_name }}
+          *actor*: ${{ github.actor }}
+          *action*: ${{ github.event.action }}
+          "*PR*: [${{ github.event.pull_request.title }}](${{ github.event.pull_request._links.html.href }})"
+
+#        TODO: shall we pass tg bot secrets as env or args?
+#        tg-bot-token: ${{ secrets.TG_BOT_ID }}
+#        channel-id: ${{ secrets.TG_CHAT_ID }}
+
+#      TODO: uncomment after secrets are added to repo settings
       env:
-#        TODO: uncomment after secrets are added to repo settings
-#        BOT_ID: ${{ secrets.TG_BOT_ID }}
-#        CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-        PR_LINK: ${{ github.event.pull_request._links.html.href }}
-        PR_TITLE: ${{ github.event.pull_request.title }}
-        ACTION: ${{ github.event.action }}
-      run: bash .github/scripts/notify_tg.sh
+        BOT_ID: ${{ secrets.TG_BOT_ID }}
+        CHAT_ID: ${{ secrets.TG_CHAT_ID }}
 
 
