@@ -6,52 +6,59 @@ import com.example.shoppyshop.dto.ProductShortResponseDto;
 import com.example.shoppyshop.dto.ProductUpdateRequestDto;
 import com.example.shoppyshop.models.Product;
 import com.example.shoppyshop.service.ProductService;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
+import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("admin/api/products")
 public class ProductController {
 
-    private final ProductService productService;
-    private final ModelMapper modelMapper;
+  private final ProductService productService;
+  private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, ModelMapper modelMapper) {
-        this.productService = productService;
-        this.modelMapper = modelMapper;
-    }
+  public ProductController(ProductService productService, ModelMapper modelMapper) {
+    this.productService = productService;
+    this.modelMapper = modelMapper;
+  }
 
-    // TODO: check if not-nil category ID is validated
-    @RolesAllowed("ADMIN")
-    @PostMapping
-    public ProductResponseDto create(@RequestBody @Valid ProductCreateRequestDto pdto) {
-        Product product = modelMapper.map(pdto, Product.class);
-        return modelMapper.map(productService.save(product), ProductResponseDto.class);
-    }
+  // TODO: check if not-nil category ID is validated
+  @RolesAllowed("ADMIN")
+  @PostMapping
+  public ProductResponseDto create(@RequestBody @Valid ProductCreateRequestDto pdto) {
+    Product product = modelMapper.map(pdto, Product.class);
+    return modelMapper.map(productService.save(product), ProductResponseDto.class);
+  }
 
-    @RolesAllowed("ADMIN")
-    @GetMapping
-    public List<ProductShortResponseDto> findAll() {
-        List<ProductShortResponseDto> result = new ArrayList<>();
-        productService.findAll().forEach(p -> result.add(modelMapper.map(p, ProductShortResponseDto.class)));
-        return result;
-    }
+  @RolesAllowed("ADMIN")
+  @GetMapping
+  public List<ProductShortResponseDto> findAll() {
+    List<ProductShortResponseDto> result = new ArrayList<>();
+    productService
+        .findAll()
+        .forEach(p -> result.add(modelMapper.map(p, ProductShortResponseDto.class)));
+    return result;
+  }
 
-    @GetMapping("/{id}")
-    public ProductResponseDto findById(@PathVariable Long id) {
-        return modelMapper.map(productService.findById(id), ProductResponseDto.class);
-    }
+  @GetMapping("/{id}")
+  public ProductResponseDto findById(@PathVariable Long id) {
+    return modelMapper.map(productService.findById(id), ProductResponseDto.class);
+  }
 
-    @PatchMapping("/{id}")
-    public ProductResponseDto partialUpdate(@PathVariable Long id, @RequestBody ProductUpdateRequestDto pdto) {
-        Product product = modelMapper.map(pdto, Product.class);
-        return modelMapper.map(productService.partialUpdate(id, product), ProductResponseDto.class);
-    }
-
+  @PatchMapping("/{id}")
+  public ProductResponseDto partialUpdate(
+      @PathVariable Long id, @RequestBody ProductUpdateRequestDto pdto) {
+    Product product = modelMapper.map(pdto, Product.class);
+    return modelMapper.map(productService.partialUpdate(id, product), ProductResponseDto.class);
+  }
 }

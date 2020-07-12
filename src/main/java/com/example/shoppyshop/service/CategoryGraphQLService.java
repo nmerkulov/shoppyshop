@@ -11,21 +11,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryGraphQLService {
 
-    private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
+  private final CategoryRepository categoryRepository;
+  private final ProductRepository productRepository;
 
-    public CategoryGraphQLService(CategoryRepository categoryRepository, ProductRepository productRepository) {
-        this.categoryRepository = categoryRepository;
-        this.productRepository = productRepository;
-    }
+  public CategoryGraphQLService(
+      CategoryRepository categoryRepository, ProductRepository productRepository) {
+    this.categoryRepository = categoryRepository;
+    this.productRepository = productRepository;
+  }
 
-    @GraphQLQuery(name = "categories")
-    public Iterable<Category> findAll() {
-        return categoryRepository.findAll();
-    }
+  @GraphQLQuery(name = "categories")
+  public Iterable<Category> findAll() {
+    return categoryRepository.findAll();
+  }
 
-    @GraphQLQuery
-    public Iterable<Product> products(@GraphQLContext Category category) {
-        return productRepository.findByCategoryId(category.getId());
-    }
+  @GraphQLQuery
+  public Iterable<Product> products(@GraphQLContext Category category) {
+    return productRepository.findByCategoryId(category.getId());
+  }
 }
