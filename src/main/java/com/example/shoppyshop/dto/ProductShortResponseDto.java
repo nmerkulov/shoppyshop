@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductShortResponseDto {
-    private Long id;
-    private String name;
-    private Long price;
+  private Long id;
+  private String name;
+  private Long price;
 }

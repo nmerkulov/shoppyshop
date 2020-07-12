@@ -1,10 +1,8 @@
 package com.example.shoppyshop.models;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
 import java.util.List;
+import org.springframework.data.repository.CrudRepository;
 
-public interface CategoryRepository extends CrudRepository<Category, Long>{
-    List<Category> findAll();
+public interface CategoryRepository extends CrudRepository<Category, Long> {
+  List<Category> findAll();
 }

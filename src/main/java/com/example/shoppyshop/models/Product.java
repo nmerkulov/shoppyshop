@@ -1,23 +1,29 @@
 package com.example.shoppyshop.models;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
 
 @Entity
 @Data
 @DynamicUpdate
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private int price;
-    private String name;
-    @JoinColumn(name = "category_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Category category;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
+  private int price;
+  private String name;
+
+  @JoinColumn(name = "category_id")
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  private Category category;
 }

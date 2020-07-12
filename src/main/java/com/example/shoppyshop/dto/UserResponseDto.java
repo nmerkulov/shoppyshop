@@ -1,11 +1,10 @@
 package com.example.shoppyshop.dto;
 
-import lombok.Data;
-
 import java.util.Collection;
+import lombok.Data;
 
 @Data
 public class UserResponseDto {
-    private String username;
-    private Collection<String> roles;
+  private String username;
+  private Collection<String> roles;
 }

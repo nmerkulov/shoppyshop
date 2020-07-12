@@ -1,7 +1,7 @@
-name: run tests
+name: CI
 on: push
 jobs:
-  tests:
+  checkstyle_and_tests:
     runs-on: ubuntu-latest
 
     services:
@@ -26,15 +26,33 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '1.8'
+
+    - name: check style
+      run: mvn checkstyle:check
+
     - name: run tests with maven
 #      TODO: uncomment before merge !
       run: echo fake tests run
 #      run: mvn test
 
     - name: display github context
+      if: ${{ always() }}
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
 
+    - name: extract branch name
+      id: extract_branch
+      if: ${{ failure() }}
+      run: echo "::set-output name=branch::${GITHUB_REF##*/}"
 
+    - uses: ./.github/actions/notify_tg
+      if: ${{ failure() }}
+      with:
+        message: |
+          алярм!!! ${{ github.actor }} опять грохнул билд!
+          *branch*: [${{ steps.extract_branch.outputs.branch }}](https://github.com/${{ github.repository }}/tree/${{ steps.extract_branch.outputs.branch }})
+#      env:
+#        BOT_ID: ${{ secrets.TG_BOT_ID }}
+#        CHAT_ID: ${{ secrets.TG_CHAT_ID }}
 

@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductGraphQLService {
 
-    private final ProductRepository productRepository;
+  private final ProductRepository productRepository;
 
-    public ProductGraphQLService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+  public ProductGraphQLService(ProductRepository productRepository) {
+    this.productRepository = productRepository;
+  }
 
-    @GraphQLQuery(name = "products")
-    public Iterable<Product> findAll() {
-        return productRepository.findAll();
-    }
+  @GraphQLQuery(name = "products")
+  public Iterable<Product> findAll() {
+    return productRepository.findAll();
+  }
 }
