@@ -1,7 +1,7 @@
-name: run tests
+name: CI
 on: push
 jobs:
-  tests:
+  checkstyle_and_tests:
     runs-on: ubuntu-latest
 
     services:
