@@ -26,13 +26,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '1.8'
+
+    - name: check style
+      run: mvn checkstyle:check
+
     - name: run tests with maven
 #      TODO: uncomment before merge !
       run: echo fake tests run
 #      run: mvn test
-
-    - name: check style
-      run: mvn checkstyle:check
 
     - name: display github context
       if: ${{ always() }}
