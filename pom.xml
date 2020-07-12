@@ -138,6 +138,12 @@
 					<encoding>UTF-8</encoding>
 					<configLocation>google_checks.xml</configLocation>
 					<violationSeverity>warning</violationSeverity>
+					<suppressionsLocation>
+						.checkstyle/checkstyle-suppressions.xml
+					</suppressionsLocation>
+					<suppressionsFileExpression>
+						checkstyle.suppressions.file
+					</suppressionsFileExpression>
 				</configuration>
 			</plugin>
 		</plugins>
