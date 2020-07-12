@@ -60,5 +60,4 @@ public class AuthController {
     sess.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
     return ResponseEntity.ok().build();
   }
-  ;
 }
